@@ -1,0 +1,14 @@
+{
+   "Statement": [
+      {
+         "Action": [
+            "elasticloadbalancing:RegisterTargets",
+            "elasticloadbalancing:DeregisterTargets",
+            "elasticloadbalancing:DescribeTargetHealth"
+         ],
+         "Effect": "Allow",
+         "Resource": "*"
+      }
+   ],
+   "Version": "2012-10-17"
+}
