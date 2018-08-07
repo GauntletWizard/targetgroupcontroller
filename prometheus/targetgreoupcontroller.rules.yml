@@ -1,0 +1,13 @@
+groups:
+- name: targetgroupcontroller.rules
+  rules:
+  - record: targetgroup:aws_lastupdated
+    expr: time() - avg(TargetGroup_lastUpdated) by (targetGroupARN)
+  - alert: TargetGroupController_Update
+    expr: targetgroup:aws_lastupdated > 7200
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "TargetGroupController hasn't updated"
+      description: "Pod list may not have changed, but this is unlikely."
