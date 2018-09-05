@@ -25,13 +25,13 @@ go_binary(
 go_library(
     name = "go_default_library",
     srcs = [
-        "k8sclient.go",
         "targetGroup.go",
         "watcher.go",
     ],
     importpath = "github.com/gauntletwizard/targetgroupcontroller",
     visibility = ["//visibility:private"],
     deps = [
+        "//k8sclient:go_default_library",
         "@com_github_aws_aws_sdk_go//aws:go_default_library",
         "@com_github_aws_aws_sdk_go//aws/session:go_default_library",
         "@com_github_aws_aws_sdk_go//service/elbv2:go_default_library",

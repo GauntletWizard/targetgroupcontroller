@@ -12,6 +12,7 @@ import (
 
 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+	client "github.com/gauntletwizard/targetgroupcontroller/k8sclient"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
@@ -53,7 +54,7 @@ func main() {
 	watcher := Watcher{Service: *service, port: *port, tg: &tg}
 
 	// Setup k8s
-	client, ns := NewK8sClient()
+	client, ns := client.NewK8sClient()
 	watchOptions := meta.ListOptions{}
 
 	for {
