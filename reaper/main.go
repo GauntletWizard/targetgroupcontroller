@@ -5,7 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	// 	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
+	core "k8s.io/api/core/v1"
+	meta "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	client "github.com/gauntletwizard/targetgroupcontroller/k8sclient"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -25,10 +26,17 @@ func main() {
 	go func() { log.Fatal(http.ListenAndServe(*httpAddr, nil)) }()
 
 	// Setup k8s
-	client, _ := client.NewK8sClient()
+	client, ns := client.NewK8sClient()
 
-	for {
-		core := client.Core()
-		log.Println(core)
+	core := client.Core()
+	log.Println(core)
+	pods, _ := core.Pods(ns).List(meta.ListOptions{})
+
+	var unreadyPods unreadyPodList
+	for _, p := range pods.Items {
+		log.Println(p.Status.Conditions)
+		unreadyPods = append(unreadyPods, &p)
 	}
 }
+
+type unreadyPodList []*core.Pod
