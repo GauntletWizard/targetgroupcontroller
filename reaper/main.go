@@ -18,6 +18,8 @@ type IPGroupController struct {
 
 var httpAddr = flag.String("http", ":8080", "Address to bind for metrics server")
 
+const Ready = "Ready"
+
 func main() {
 	flag.Parse()
 
@@ -33,10 +35,22 @@ func main() {
 	pods, _ := core.Pods(ns).List(meta.ListOptions{})
 
 	var unreadyPods unreadyPodList
+	log.Println(len(pods.Items))
 	for _, p := range pods.Items {
-		log.Println(p.Status.Conditions)
-		unreadyPods = append(unreadyPods, &p)
+		if podIsUnready(p) {
+			unreadyPods = append(unreadyPods, &p)
+		}
 	}
+	log.Println(len(unreadyPods))
+}
+
+func podIsUnready(p core.Pod) bool {
+	for _, c := range p.Status.Conditions {
+		if c.Type == Ready && c.Status == "False" {
+			return true
+		}
+	}
+	return false
 }
 
 type unreadyPodList []*core.Pod
