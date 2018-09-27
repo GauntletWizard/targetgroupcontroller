@@ -42,11 +42,17 @@ func main() {
 		}
 	}
 	log.Println(len(unreadyPods))
+
 }
+
+// These consts describe  in our unready check
+// (These should probably be annotated with official documentation)
+const unreadyStatus = "False"
+const completedReason = "PodCompleted"
 
 func podIsUnready(p core.Pod) bool {
 	for _, c := range p.Status.Conditions {
-		if c.Type == Ready && c.Status == "False" {
+		if c.Type == Ready && c.Status == unreadyStatus && c.Reason != completedReason {
 			return true
 		}
 	}
