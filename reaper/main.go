@@ -17,6 +17,7 @@ type IPGroupController struct {
 }
 
 var httpAddr = flag.String("http", ":8080", "Address to bind for metrics server")
+var dryrun = flag.Bool("dryrun", true, "Don't destroy pods, just print what you would destroy (default)")
 
 const Ready = "Ready"
 
@@ -31,17 +32,14 @@ func main() {
 	client, ns := client.NewK8sClient()
 
 	core := client.Core()
-	log.Println(core)
 	pods, _ := core.Pods(ns).List(meta.ListOptions{})
 
 	var unreadyPods unreadyPodList
-	log.Println(len(pods.Items))
 	for _, p := range pods.Items {
 		if podIsUnready(p) {
 			unreadyPods = append(unreadyPods, &p)
 		}
 	}
-	log.Println(len(unreadyPods))
 
 }
 
