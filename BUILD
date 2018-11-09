@@ -3,6 +3,12 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
+# gazelle:prefix github.com/gauntletwizard/targetgroupcontroller
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+gazelle(name = "gazelle")
+
+
 go_image(
     name = "dockerimage",
     srcs = ["main.go"],
