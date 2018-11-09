@@ -19,7 +19,6 @@ load(
 ## Go rules
 # https://github.com/bazelbuild/rules_go#generating-build-files
 
-
 http_archive(
     name = "io_bazel_rules_go",
     urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.12.1/rules_go-0.12.1.tar.gz"],
@@ -42,9 +41,9 @@ _go_image_repos()
 # Gazelle
 # gazelle:prefix github.com/gauntletwizard/targetgroupcontroller
 http_archive(
-name = "bazel_gazelle",
-urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/0.12.0/bazel-gazelle-0.12.0.tar.gz"],
-sha256 = "ddedc7aaeb61f2654d7d7d4fd7940052ea992ccdb031b8f9797ed143ac7e8d43",
+    name = "bazel_gazelle",
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/0.12.0/bazel-gazelle-0.12.0.tar.gz"],
+    sha256 = "ddedc7aaeb61f2654d7d7d4fd7940052ea992ccdb031b8f9797ed143ac7e8d43",
 )
 
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
@@ -88,7 +87,7 @@ go_repository(
 
 go_repository(
     name = "com_github_aws_aws_sdk_go",
-    commit = "fec155a4e1e8fdb1fd7167d14b4ab427b283cb93",
+    commit = "bcf2dfef3f28c8ac3d245e6b0f684bbf34d55a05",
     importpath = "github.com/aws/aws-sdk-go",
 )
 
@@ -134,4 +133,3 @@ go_repository(
     commit = "24818f796faf91cd76ec7bddd72458fbced7a6c1",
     importpath = "github.com/google/gofuzz",
 )
-

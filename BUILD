@@ -1,5 +1,4 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
-
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 load("@io_bazel_rules_docker//container:container.bzl", "container_push")
 
@@ -8,21 +7,19 @@ load("@bazel_gazelle//:def.bzl", "gazelle")
 
 gazelle(name = "gazelle")
 
-
 go_image(
     name = "dockerimage",
     srcs = ["main.go"],
     embed = [":go_default_library"],
-    importpath = "github.com/gauntletwizard/targetgroupcontroller",
-    visibility = ["//visibility:public"],
     goarch = "amd64",
     goos = "linux",
+    importpath = "github.com/gauntletwizard/targetgroupcontroller",
     pure = "on",
+    visibility = ["//visibility:public"],
 )
 
 go_binary(
     name = "targetgroupcontroller",
-    srcs = ["main.go"],
     embed = [":go_default_library"],
     importpath = "github.com/gauntletwizard/targetgroupcontroller",
     visibility = ["//visibility:public"],
@@ -32,6 +29,7 @@ go_library(
     name = "go_default_library",
     srcs = [
         "k8sclient.go",
+        "main.go",
         "targetGroup.go",
         "watcher.go",
     ],
@@ -53,10 +51,10 @@ go_library(
 
 container_push(
     name = "push_dockerimage",
+    format = "Docker",
     image = "dockerimage",
     registry = "index.docker.io",
-    format = "Docker",
     repository = "gauntletwizard/targetgroupcontroller",
-    tag = "{BUILD_EMBED_LABEL}",
     stamp = True,
-    )
+    tag = "{BUILD_EMBED_LABEL}",
+)
