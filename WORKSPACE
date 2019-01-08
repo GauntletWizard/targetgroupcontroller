@@ -58,32 +58,30 @@ go_repository(
     importpath = "github.com/prometheus/client_golang",
 )
 
+K8S_VERSION = "1.12.4"
+
 go_repository(
     name = "io_k8s_client_go",
-    commit = "0ec73abb067faf46eeb80234f4df6e8413ef3e09",
     remote = "https://github.com/kubernetes/client-go.git",
     vcs = "git",
+    tag = "kubernetes-%s" % K8S_VERSION,
     importpath = "k8s.io/client-go",
 )
 
 go_repository(
     name = "io_k8s_api",
-    commit = "8be2a0b24ed0dac9cfc1ac2d987ea16cfcdbecb6",
     remote = "https://github.com/kubernetes/api.git",
     vcs = "git",
     importpath = "k8s.io/api",
-    # This magic comes from https://github.com/bazelbuild/rules_go/issues/1022
-    build_file_proto_mode = "disable",
+    tag = "kubernetes-%s" % K8S_VERSION,
 )
 
 go_repository(
     name = "io_k8s_apimachinery",
-    commit = "bce280dade67588308614434551c0b865433e44d",
     remote = "https://github.com/kubernetes/apimachinery.git",
     vcs = "git",
     importpath = "k8s.io/apimachinery",
-    # This magic comes from https://github.com/bazelbuild/rules_go/issues/1022
-    build_file_proto_mode = "disable",
+    tag = "kubernetes-%s" % K8S_VERSION,
 )
 
 go_repository(
@@ -133,4 +131,16 @@ go_repository(
     name = "com_github_google_gofuzz",
     commit = "24818f796faf91cd76ec7bddd72458fbced7a6c1",
     importpath = "github.com/google/gofuzz",
+)
+
+go_repository(
+    name = "com_github_imdario_mergo",
+    commit = "ca3dcc1022bae9b5510f3c83705b72db1b1a96f9",
+    importpath = "github.com/imdario/mergo",
+)
+
+go_repository(
+    name = "org_golang_x_crypto",
+    commit = "ff983b9c42bc9fbf91556e191cc8efb585c16908",
+    importpath = "golang.org/x/crypto",
 )
