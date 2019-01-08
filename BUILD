@@ -9,7 +9,6 @@ gazelle(name = "gazelle")
 
 go_image(
     name = "dockerimage",
-    srcs = ["main.go"],
     embed = [":go_default_library"],
     goarch = "amd64",
     goos = "linux",
